@@ -49,7 +49,7 @@ Function New-PKCE {
         }  
     }
 
-    $federationTemplate = [pscustomobject][ordered]@{  
+    $pkceTemplate = [pscustomobject][ordered]@{  
         code_verifier  = $null  
         code_challenge = $null   
     }  
@@ -59,11 +59,12 @@ Function New-PKCE {
         $hash = $hashAlgo.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($codeVerifier))
         $b64Hash = [System.Convert]::ToBase64String($hash)
         $code_challenge = $b64Hash.Substring(0, 43)
+
         $code_challenge = $code_challenge.Replace("/","_")
         $code_challenge = $code_challenge.Replace("+","-")
         $code_challenge = $code_challenge.Replace("=","")
 
-        $pkceChallenges = $federationTemplate.PsObject.Copy()
+        $pkceChallenges = $pkceTemplate.PsObject.Copy()
         $pkceChallenges.code_challenge = $code_challenge 
         $pkceChallenges.code_verifier = $codeVerifier 
 
@@ -77,10 +78,14 @@ Function New-PKCE {
         $hashAlgo = [System.Security.Cryptography.HashAlgorithm]::Create('sha256')
         $hash = $hashAlgo.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($codeVerifier))
         $b64Hash = [System.Convert]::ToBase64String($hash)
-        $codeChallenge = $b64Hash.Substring(0, 43)
+        $code_challenge = $b64Hash.Substring(0, 43)
         
-        $pkceChallenges = $federationTemplate.PsObject.Copy()
-        $pkceChallenges.code_challenge = $codeChallenge
+        $code_challenge = $code_challenge.Replace("/","_")
+        $code_challenge = $code_challenge.Replace("+","-")
+        $code_challenge = $code_challenge.Replace("=","")
+
+        $pkceChallenges = $pkceTemplate.PsObject.Copy()
+        $pkceChallenges.code_challenge = $code_challenge
         $pkceChallenges.code_verifier = $codeVerifier 
 
         return $pkceChallenges 
@@ -93,8 +98,8 @@ Export-ModuleMember -Function 'New-PKCE'
 # SIG # Begin signature block
 # MIINSwYJKoZIhvcNAQcCoIINPDCCDTgCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUd0tfmx5QS6GRlTiTxauo+xkj
-# 7UmgggqNMIIFMDCCBBigAwIBAgIQBAkYG1/Vu2Z1U0O1b5VQCDANBgkqhkiG9w0B
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUn8NdS2m5BJK/hiGCd6FAnI+H
+# 17GgggqNMIIFMDCCBBigAwIBAgIQBAkYG1/Vu2Z1U0O1b5VQCDANBgkqhkiG9w0B
 # AQsFADBlMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYD
 # VQQLExB3d3cuZGlnaWNlcnQuY29tMSQwIgYDVQQDExtEaWdpQ2VydCBBc3N1cmVk
 # IElEIFJvb3QgQ0EwHhcNMTMxMDIyMTIwMDAwWhcNMjgxMDIyMTIwMDAwWjByMQsw
@@ -155,11 +160,11 @@ Export-ModuleMember -Function 'New-PKCE'
 # b20xMTAvBgNVBAMTKERpZ2lDZXJ0IFNIQTIgQXNzdXJlZCBJRCBDb2RlIFNpZ25p
 # bmcgQ0ECEAzs0XV3s4G5ExftUKPGYK8wCQYFKw4DAhoFAKB4MBgGCisGAQQBgjcC
 # AQwxCjAIoAKAAKECgAAwGQYJKoZIhvcNAQkDMQwGCisGAQQBgjcCAQQwHAYKKwYB
-# BAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcNAQkEMRYEFO+7xJQX2Xbk
-# ao33dgltH02k7ErbMA0GCSqGSIb3DQEBAQUABIIBAKoUIBYS6ITW5qvetC+dxmiw
-# u/8NiK9vVNVMCb+xup5UVJmeHGb/RJDYXNhe2/KvebpUXEscwXS4gkq98/UayiA4
-# RyDVBFuMhq5LzF9V8T5u7I0e35HJATaNOOIKxxbNVGGaDQj2SLMNGCIQopJG3Xdc
-# aySZj+3btDm/KugCRygW9OyAzEJAcQfo2kHjH2QDZayv8X/lVbBOUnWxS4PFdSo4
-# HaBtpgVUilE/mvmnrCw4cTcsJ9xh9wvGEt+tuGdXOPgSoHIhcCCalv7O5Zr0JgJI
-# 0tIBwX4chEDICLMPUkl1TWePppNYHz5+90BmmyMknV/+aD9MRo5EtrP9imOfwWI=
+# BAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcNAQkEMRYEFB1g0ZTobmof
+# sjh8iKvkilI28RhhMA0GCSqGSIb3DQEBAQUABIIBAJ1wU/gkwE4NvhSU5LrZ2vY5
+# /PhT6bGWluh4vhYwYd5wiZzkCYnMPJdMb6YfxgI+O6LSwdV4icjyGEsSLxJ+hv88
+# 2BxZz653Sj4jLoMhh7V2LYZh8goPmjbpAX2qoE+ypXR+FluQNaui+VynktS/clnd
+# ABXAmBTuK5MKD5ITI898pUTL2GLraaqgcjx8nJDaYJbnyFYoP9gwByE3qNqfXefa
+# x0FvP+No7nxqusSDKZXgZ62Af3sThe89c8IG/T0zkW3AwTo2gwNmnyZBoHERdhPH
+# n0DsLFcguQjt04BQRNDbVmt2qzYvOtlppXnpV+/9sqCOpi/my7t+48P74+WVGVM=
 # SIG # End signature block
