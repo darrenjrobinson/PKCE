@@ -37,7 +37,7 @@ New-PKCE | FL
 ### Output 
 ```
 code_verifier  : WoBOriV4tDoK61KVPbWM71sk5maozuSXjxRUO2fu9zIQCoH0ExenrT7clYznp15CKLy8HnnXENGBw3SuZjM0T2vaUvVJBD7ThpD2XqkjdPyekAkYFs8b4cCFaxHgFOhO
-code_challenge : dKk5vCznfP9dqr7PPugOfq_cmyX1hEMzvdVT_x0ZRg0
+code_challenge : dKk5vCznfP9dqr7PPugOfq/cmyX1hEMzvdVT/x0ZRg0
 ```
 
 ## Example 
@@ -51,7 +51,7 @@ New-PKCE -length 99 | FL
 
 ```
 code_verifier  : yf82tm6q0Q9mgkFfxPXfRNyN4dhlDHrI9kKKsX5vAVhMLeW80LyutH3wx9bPh82wisluIBOsaR6Z7P0z5LMcqoOfJRayn7ZpTkD
-code_challenge : YOamaHC_iqRrIkSusU2FEMahO2BVJz1KZzEQ9o6j5kE
+code_challenge : YOamaHC/iqRrIkSusU2FEMahO2BVJz1KZzEQ9o6j5kE
 ```
 
 ## Example 
@@ -85,10 +85,10 @@ $codeChallenge
 
 ```
 code_verifier  : n8bOz65bchiqsu5dW1JTRWBGWlkbmKUCXR5CRiUqrdqIBeSvTlOjS8i9xsgpVVMBXEgjNKDBKhFNDnzFa4yp87v3fZNgPA2MtFEIrtdjoRkvtmAwrj3uCcyf1A4h7ZGY
-code_challenge : T1nH0TteC6QN7p4upQ4GPT_x0nWCfKMrtTi5-mptrvg
+code_challenge : T1nH0TteC6QN7p4upQ4GPT/x0nWCfKMrtTi5+mptrvg
 
 n8bOz65bchiqsu5dW1JTRWBGWlkbmKUCXR5CRiUqrdqIBeSvTlOjS8i9xsgpVVMBXEgjNKDBKhFNDnzFa4yp87v3fZNgPA2MtFEIrtdjoRkvtmAwrj3uCcyf1A4h7ZGY
-T1nH0TteC6QN7p4upQ4GPT_x0nWCfKMrtTi5-mptrvg
+T1nH0TteC6QN7p4upQ4GPT/x0nWCfKMrtTi5+mptrvg
 ```
 
 ## Keep up to date
